@@ -20,7 +20,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Sitemap
 
-`/sitemap.xml` lists the homepage and all product PDP URLs. For production, set `NEXT_PUBLIC_SITE_URL` (e.g. `https://your-domain.vercel.app`) in Vercel so the sitemap uses your real domain; otherwise it falls back to the Vercel deployment URL or `https://example.com`.
+`/sitemap.xml` lists the homepage and all product PDP URLs. On Vercel it uses the **root production domain** (e.g. `https://watts-shop.vercel.app`) via `VERCEL_PROJECT_PRODUCTION_URL`. Enable *Automatically expose System Environment Variables* in your Vercel project (Settings → Environment Variables) so that variable is available. For a custom domain, set `NEXT_PUBLIC_SITE_URL` in Vercel.
 
 ## Build & deploy (Vercel)
 

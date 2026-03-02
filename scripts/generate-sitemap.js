@@ -1,13 +1,16 @@
 const fs = require('fs');
 const path = require('path');
 
-// Base URL = where the app is running: override, then Vercel deployment URL, then localhost
+// Base URL = production/root domain (not deployment-specific). See https://vercel.com/docs/projects/environment-variables/system-environment-variables
 const custom = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-const onVercel = process.env.VERCEL_URL?.trim();
+const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim(); // e.g. watts-shop.vercel.app (always the root domain)
+const vercelUrl = process.env.VERCEL_URL?.trim(); // fallback: deployment URL
 const port = process.env.PORT || 3000;
+const normalize = (host) => `https://${host.replace(/^https?:\/\//, '').replace(/\/$/, '')}`;
 const baseUrl =
   custom ||
-  (onVercel ? `https://${onVercel.replace(/^https?:\/\//, '').replace(/\/$/, '')}` : null) ||
+  (productionUrl ? normalize(productionUrl) : null) ||
+  (process.env.VERCEL && vercelUrl ? normalize(vercelUrl) : null) ||
   `http://localhost:${port}`;
 
 const productsPath = path.join(process.cwd(), 'data', 'products.json');
