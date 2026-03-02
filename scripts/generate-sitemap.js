@@ -1,15 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 
-// Use deployment URL: custom domain, then Vercel URL (set at build on Vercel), never example.com in production
-const vercelUrl =
-  process.env.VERCEL_URL && process.env.VERCEL_URL.trim()
-    ? `https://${process.env.VERCEL_URL.replace(/^https?:\/\//, '').replace(/\/$/, '')}`
-    : '';
+// Base URL = where the app is running: override, then Vercel deployment URL, then localhost
+const custom = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+const onVercel = process.env.VERCEL_URL?.trim();
+const port = process.env.PORT || 3000;
 const baseUrl =
-  (process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL.trim()) ||
-  vercelUrl ||
-  'https://example.com';
+  custom ||
+  (onVercel ? `https://${onVercel.replace(/^https?:\/\//, '').replace(/\/$/, '')}` : null) ||
+  `http://localhost:${port}`;
 
 const productsPath = path.join(process.cwd(), 'data', 'products.json');
 const products = JSON.parse(fs.readFileSync(productsPath, 'utf8'));
