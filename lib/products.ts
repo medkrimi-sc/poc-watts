@@ -1,5 +1,4 @@
-import fs from 'fs';
-import path from 'path';
+import productsData from '@/data/products.json';
 
 export interface Product {
   slug: string;
@@ -9,9 +8,10 @@ export interface Product {
   thumbnail: string;
 }
 
+const products = productsData as Product[];
+
 export function getProducts(): Product[] {
-  const filePath = path.join(process.cwd(), 'data', 'products.json');
-  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  return Array.isArray(products) ? products : [];
 }
 
 export function getProductBySlug(slug: string): Product | undefined {

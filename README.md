@@ -18,6 +18,10 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Sitemap
+
+`/sitemap.xml` lists the homepage and all product PDP URLs. For production, set `NEXT_PUBLIC_SITE_URL` (e.g. `https://your-domain.vercel.app`) in Vercel so the sitemap uses your real domain; otherwise it falls back to the Vercel deployment URL or `https://example.com`.
+
 ## Build & deploy (Vercel)
 
 - **Build:** `npm run build` → static export in `out/`
